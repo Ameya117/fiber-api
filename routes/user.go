@@ -6,15 +6,15 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-type User struct {
+type UserSerializer struct {
 	// not a model , serializer
 	ID        uint   `json:"id"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 }
 
-func CreateResponseUser(userModel models.User) User {
-	return User{ID: userModel.ID, FirstName: userModel.FirstName, LastName: userModel.LastName}
+func CreateResponseUser(userModel models.User) UserSerializer {
+	return UserSerializer{ID: userModel.ID, FirstName: userModel.FirstName, LastName: userModel.LastName}
 }
 
 func FindUser(userID uint, user *models.User) error {
@@ -31,7 +31,7 @@ func GetUsers(c *fiber.Ctx) error {
 	var users []models.User
 	database.Database.Db.Find(&users)
 
-	var responseUsers []User
+	var responseUsers []UserSerializer
 	for _, user := range users {
 		responseUser := CreateResponseUser(user)
 		responseUsers = append(responseUsers, responseUser)
